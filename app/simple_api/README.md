@@ -1,11 +1,10 @@
 # API Service
-This service provides API service utilizing local database.
+This service provides API endpoints and interact with a local database.
 
 ## Assumptions
-- network traffic is handled by some external services. Network is stable and reliable, and traffic send to this API service could be reasonable large but will not overwhelm the service (load balance is handled by other service). 
+- network traffic and load balancing are handled by some external services. Network is stable and reliable, and traffic send to this API service could be reasonable large but will not overwhelm the service. 
 - user has already been authenticated and authorized by some external services. All user request is authorized but still could be invalid.
 - all user request is GET request. User can only query data from database but cannot update or insert data in database.
-    - this assumption is important, it has great impact on how I design the database indexing, cache structure, and api endpoints
 
 ## Cache Mechanism
 Because this project only allows user to request data but not update or insert new data, so a cache could dramatically improve the query performance. Due to the size and simplicity of this project, using a full-blown third-party cache library could be overkill for this project. Therefore, I implement a simple LFU (least frequently used) cache to store searched query and returned database objects.

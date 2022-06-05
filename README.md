@@ -1,5 +1,5 @@
 # Back-end Application
-This back-end application consists of two services, data processing service and API service. 
+This demo back-end application consists of two services, data processing service and API service. 
 
 ## Prerequisites
 

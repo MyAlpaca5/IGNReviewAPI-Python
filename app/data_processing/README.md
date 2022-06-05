@@ -1,5 +1,5 @@
 # Data Processing Service
-This service will read/pull from a csv formatted source, process the raw data, then store them in a SQL database.
+This service will read he raw data from a csv-formatted source, process the raw data, then store them in a SQL database. For this demo application, I will use a csv file provided by IGN including information for their reviews.
 
 ## Data Processing Strategy
 ### Storing

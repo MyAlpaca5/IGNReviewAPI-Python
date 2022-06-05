@@ -1,5 +1,5 @@
 # Simple DB
-a simple database used by API service. In this project, I will use SQLite as the database. 
+A simple database used by API service. In this application, i`SQLite` is used. 
 
 ## Database Selection
 There are two main reason I choose SQL database instead of No-SQL database for this project:
