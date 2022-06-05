@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from typing import Generic, List, Optional, Type, TypeVar, Dict, Any
+from typing import Generic, Type, TypeVar, Any
 from fastapi.encoders import jsonable_encoder
 
 from .database import Base
@@ -13,15 +13,15 @@ class CRUDBase(Generic[ModelType]):
     def __init__(self, model: Type[ModelType]):
         self.model = model
 
-    def read_one_by_id(self, db: Session, id: int) -> Optional[ModelType]:
+    def read_one_by_id(self, db: Session, id: int) -> ModelType | None:
         return db.query(self.model).get(id)
 
     def read_range(
         self, db: Session, *, skip: int = 0, limit: int = 100
-    ) -> List[ModelType]:
+    ) -> list[ModelType]:
         return db.query(self.model).offset(skip).limit(limit).all()
 
-    def create(self, db: Session, pair: Dict[str, Any]) -> ModelType:
+    def create(self, db: Session, pair: dict[str, Any]) -> ModelType:
         db_obj = self.model(**pair)
         db.add(db_obj)
         db.commit()
@@ -29,7 +29,7 @@ class CRUDBase(Generic[ModelType]):
         return db_obj
 
     def update(
-        self, db: Session, *, old_db_obj: ModelType, updated_pair: Dict[str, Any]
+        self, db: Session, *, old_db_obj: ModelType, updated_pair: dict[str, Any]
     ) -> ModelType:
         old_db_data = jsonable_encoder(old_db_obj)
 
@@ -50,7 +50,7 @@ class CRUDBase(Generic[ModelType]):
 
 
 class MediaTypeCRUD(CRUDBase[MediaType]):
-    def get_overview(self, db: Session) -> Dict[str, Any]:
+    def get_overview(self, db: Session) -> dict[str, Any]:
         records = db.query(self.model).all()
         overview = {"size": len(records), "items": []}
         for r in records:
@@ -67,7 +67,7 @@ class CreatorCRUD(CRUDBase[Creator]):
 
 
 class PublisherCRUD(CRUDBase[Publisher]):
-    def get_overview(self, db: Session) -> Dict[str, Any]:
+    def get_overview(self, db: Session) -> dict[str, Any]:
         records = db.query(self.model).all()
         overview = {"size": len(records), "items": []}
         for r in records:
@@ -85,8 +85,8 @@ class RegionCRUD(CRUDBase[Region]):
 
 class ReviewCRUD(CRUDBase[Review]):
     def get_reviews_with_parameters(
-        self, db: Session, parameters: Dict[str, Any]
-    ) -> List[ModelType]:
+        self, db: Session, parameters: dict[str, Any]
+    ) -> list[ModelType]:
         """
         Get a list of Review filtered and sorted by user input parameters
 

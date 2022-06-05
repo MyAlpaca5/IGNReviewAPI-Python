@@ -1,6 +1,6 @@
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Dict, Generic, Optional, Tuple, TypeVar
+from typing import Generic, TypeVar
 
 
 Node = TypeVar('Node')
@@ -11,18 +11,18 @@ ValueType = TypeVar('ValueType')
 @dataclass
 class Node:
 
-    key: Optional[KeyType] = None
-    value: Optional[ValueType] = None
+    key: KeyType | None = None
+    value: ValueType | None = None
     freq: int = 1
-    prev: Optional[Node] = None
-    next: Optional[Node] = None
+    prev: Node | None = None
+    next: Node | None = None
 
 
 @dataclass
 class DLL:
 
-    head: Optional[Node] = None
-    tail: Optional[Node] = None
+    head: Node | None = None
+    tail: Node | None = None
 
     def append(self, node: Node) -> None:
         # reset prev and next value
@@ -65,7 +65,7 @@ class DLL:
 
         return self.head is None
 
-    def delete_head(self) -> Tuple[bool, Node]:
+    def delete_head(self) -> tuple[bool, Node]:
         """
         upper service is full, needed to remove the oldest element
         in order to append a new one. The oldest element is the head
@@ -90,8 +90,8 @@ class LFUCache(Generic[KeyType, ValueType]):
 
     capacity: int = 1
     least_freq: int = 1
-    node_map: Dict[KeyType, Node] = field(default_factory=dict)
-    freq_map: Dict[int, DLL] = field(default_factory=lambda: defaultdict(DLL))
+    node_map: dict[KeyType, Node] = field(default_factory=dict)
+    freq_map: dict[int, DLL] = field(default_factory=lambda: defaultdict(DLL))
 
     def __post_init__(self):
         if self.capacity <= 0:
@@ -117,7 +117,7 @@ class LFUCache(Generic[KeyType, ValueType]):
         # print("get", key, "freq", node.freq, "map size", len(self.node_map))
         return node.value
 
-    def put(self, key: KeyType, value: Optional[ValueType] = None) -> None:
+    def put(self, key: KeyType, value: ValueType | None = None) -> None:
         if key in self.node_map:
             self.node_map[key].value = value
             return

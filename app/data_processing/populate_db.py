@@ -1,4 +1,4 @@
-from typing import Dict, MutableSet
+from collections.abc import MutableSet
 import pandas as pd
 from dateutil import parser as datetimeparser
 from pytz import timezone
@@ -7,7 +7,7 @@ from ..simple_db import crud, database
 from ..utils.config import get_settings
 
 
-def populate_db(df: pd.DataFrame, data_set: Dict[str, MutableSet]) -> None:
+def populate_db(df: pd.DataFrame, data_set: dict[str, MutableSet]) -> None:
     """
     Create and populate database
 

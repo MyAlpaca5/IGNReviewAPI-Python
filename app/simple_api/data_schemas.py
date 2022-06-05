@@ -3,7 +3,6 @@ Schema represents data structure used in the API service.
 """
 
 from datetime import datetime
-from typing import List, Optional, Tuple
 from pydantic import BaseModel
 
 
@@ -51,20 +50,20 @@ class RegionBase(BaseModel):
 
 class ReviewBase(BaseModel):
     name: str
-    short_name: Optional[str] = None
-    long_description: Optional[str] = None
-    short_description: Optional[str] = None
+    short_name: str | None = None
+    long_description: str | None = None
+    short_description: str | None = None
     created_at: datetime
     updated_at: datetime
     review_url: str
     review_score: float
     slug: str
     media_type: MediaTypeBase
-    genres: List[GenreBase] = []
-    creators: List[CreatorBase] = []
-    publishers: List[PublisherBase] = []
-    franchises: List[FranchiseBase] = []
-    regions: List[RegionBase] = []
+    genres: list[GenreBase] = []
+    creators: list[CreatorBase] = []
+    publishers: list[PublisherBase] = []
+    franchises: list[FranchiseBase] = []
+    regions: list[RegionBase] = []
 
     class Config:
         orm_mode = True
@@ -72,17 +71,17 @@ class ReviewBase(BaseModel):
 
 class MediaTypeOverview(BaseModel):
     size: int = 0
-    items: List[Tuple[int, str]] = []
+    items: list[tuple[int, str]] = []
 
 
 class ReviewForMediaType(MediaTypeBase):
-    reviews: List[ReviewBase] = []
+    reviews: list[ReviewBase] = []
 
 
 class PublisherOverview(BaseModel):
     size: int = 0
-    items: List[Tuple[int, str]] = []
+    items: list[tuple[int, str]] = []
 
 
 class ReviewForPublisher(PublisherBase):
-    reviews: List[ReviewBase] = []
+    reviews: list[ReviewBase] = []

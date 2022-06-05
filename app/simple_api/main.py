@@ -1,7 +1,6 @@
 import json
 from fastapi import Depends, HTTPException, FastAPI
 from sqlalchemy.orm import Session
-from typing import Optional, List
 
 from .cache import LFUCache
 from .data_schemas import (
@@ -41,13 +40,13 @@ def get_review_by_id(id: int, db: Session = Depends(create_session_generator)):
     return db_obj
 
 
-@app.get("/reviews/", response_model=List[ReviewBase])
+@app.get("/reviews/", response_model=list[ReviewBase])
 def get_reviews_by_parameter(
     db: Session = Depends(create_session_generator),
-    media_type_id: Optional[int] = None,
-    publisher_id: Optional[int] = None,
-    posted_year: Optional[int] = None,
-    score: Optional[float] = None,
+    media_type_id: int | None = None,
+    publisher_id: int | None = None,
+    posted_year: int | None = None,
+    score: float | None = None,
 ):
 
     # build the paramter filter

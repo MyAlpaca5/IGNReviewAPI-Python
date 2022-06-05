@@ -1,9 +1,9 @@
 import pandas as pd
 from collections import defaultdict
-from typing import Tuple, Dict, MutableSet
+from collections.abc import MutableSet
 
 
-def process_raw(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, MutableSet]]:
+def process_raw(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, MutableSet]]:
     """
     Sanitize raw dataframe and cache a set of unique element in some columns
 
